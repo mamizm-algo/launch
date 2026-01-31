@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Brand colors: Oxford Navy, Pine Blue, Platinum, Prussian Blue, Blue State, Pale Slate */
+    --background: 222 47% 11%;
+    --foreground: 216 24% 96%;
+
+    --card: 215 19% 35% / 0.50;
+    --card-foreground: 216 24% 96%;
+
+    --popover: 215 19% 35%;
+    --popover-foreground: 216 24% 96%;
+
+    --primary: 176 41% 31%;
+    --primary-foreground: 216 24% 96%;
+
+    --secondary: 215 51% 25%;
+    --secondary-foreground: 216 24% 96%;
+
+    --muted: 215 19% 35%;
+    --muted-foreground: 213 27% 84%;
+
+    --accent: 176 41% 31%;
+    --accent-foreground: 216 24% 96%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 216 24% 96%;
+
+    --border: 215 51% 25%;
+    --input: 215 51% 25%;
+    --ring: 176 41% 31%;
+
+    --radius: 0.5rem;
+
+    --chart-1: 176 41% 31%;
+    --chart-2: 142 71% 45%;
+    --chart-3: 217 91% 60%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+
+    --bullish: 142 71% 45%;
+    --bearish: 0 84% 60%;
+    --neutral: 45 93% 47%;
+    
+    --chart-bg: 222 47% 8%;
+    --chart-grid: 215 51% 25%;
+    
+    --gradient-primary: linear-gradient(135deg, hsl(176 41% 31%) 0%, hsl(176 41% 41%) 100%);
+    --gradient-hero: linear-gradient(180deg, hsl(222 47% 11%) 0%, hsl(215, 40%, 33%) 100%);
+    
+    --shadow-glow: 0 10px 40px -10px hsl(176 41% 31% / 0.6);
+    --shadow-card: 0 4px 20px hsl(222 47% 5% / 0.5);
+    
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@media (hover: hover) {
+  .zoom-hover:hover {
+    transform: scale(1.2);
+  }
+}

@@ -216,7 +216,7 @@ const Sandbox = () => {
         </div>
 
         {/* Candle Count Slider */}
-        <Card className="mx-auto px-4 py-2 max-w-md bg-card border-border" style={{ width: `60%` }}>
+        <Card className="mx-auto px-4 py-2 max-w-md my-2 bg-card border-border" style={{ width: `60%` }}>
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <span className="text-sm font-medium text-foreground">Candle Count</span>

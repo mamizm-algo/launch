@@ -25,7 +25,7 @@ import {
   ArrowRight,
   Microscope
 } from "lucide-react";
-import { FaInstagram, FaLinkedin } from "react-icons/fa";
+import { FaDiscord, FaInstagram, FaLinkedin } from "react-icons/fa";
 
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -35,6 +35,7 @@ const LaunchingSoon = () => {
   const [email, setEmail] = useState("");
   const [becomeTester, setBecomeTester] = useState(false);
   const [acceptEmails, setAcceptEmails] = useState(false);
+  const [waitlistSubmitted, setWaitlistSubmitted] = useState(false);
 
   
 
@@ -72,7 +73,7 @@ const LaunchingSoon = () => {
     setEmail("");
     setAcceptEmails(false);
     setBecomeTester(false);
-
+    setWaitlistSubmitted(true);
   };
 
   const scrollToSection = (id: string) => {
@@ -157,7 +158,6 @@ const LaunchingSoon = () => {
       <section
         id="waitlist"
         className="relative flex items-center justify-center overflow-hidden py-16 scroll-mt-24"
-        // className="relative flex items-center justify-center overflow-hidden py-16"
       >
         {/* Animated background elements */}
         <div className="absolute inset-0 overflow-hidden">
@@ -167,34 +167,34 @@ const LaunchingSoon = () => {
 
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-4xl mx-auto text-center space-y-8">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-card border border-primary/30 backdrop-blur-sm">
-              <Sparkles className="w-4 h-4 text-primary" />
-              <span className="text-sm font-medium text-foreground">
-                Launching Soon
-              </span>
-            </div>
+           
 
             {/* Main headline */}
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight">
+            <h1 className="text-3xl md:text-4xl lg:text-7xl font-bold text-foreground leading-tight">
+              Go-to research tool for{" "}
+              <span className="bg-gradient-primary bg-clip-text text-primary">
+                retail day traders
+              </span>
+            </h1>
+            {/* <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight">
               Research, backtest and validate trades using{" "}
               <span className="bg-gradient-primary bg-clip-text text-primary">
                 Pattern Similarity Score
               </span>
-            </h1>
+            </h1> */}
 
             {/* Subheadline */}
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-              STRATOSPHERE helps traders discover similar historical patterns,
+            <p className="text-lg md:text-xl text-muted-foreground max-w-4xl mx-auto">
+              STRATOSPHERE helps traders discover repeatable historical patterns,
               eliminate subjective bias, and validate trading strategies with
-              data-driven insights — before risking real capital.
+              data-driven insights - before risking real capital.
             </p>
 
             {/* Waitlist Form */}
            <div className="mx-auto pt-4">
               <div className="bg-card backdrop-blur-sm border border-primary hover:shadow-glow rounded-xl p-6 space-y-4">
                 <h3 className="text-lg font-semibold text-foreground">
-                  Join the Waitlist
+                  Sign up to the Waitlist
                 </h3>
                 <form onSubmit={handleWaitlistSubmit} className="space-y-4">
                   <Input
@@ -248,8 +248,28 @@ const LaunchingSoon = () => {
                 </form>
               </div>
             </div>
+
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+              And
+            </p>
+
+            <div className="mx-auto pt-4">
+              <div className="bg-card backdrop-blur-sm border border-primary hover:shadow-glow rounded-xl p-6 space-y-4">
+                <h3 className="text-lg font-semibold text-foreground">
+                  Join our Discord community
+                </h3>
+                <h2 className="text-foreground">
+                  Connect with the founders and other traders to exchange ideas and be up to date with the newest features.
+                </h2>
+                <div className="flex mx-auto justify-center">
+                  <iframe src="https://discordapp.com/widget?id=1495468749745033257&theme=dark" width="900" height="350" allowtransparency="true" frameborder="1" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+                </div>
+              </div>
+            </div>
+
+
             {/* Scroll indicator */}
-            <div className="mt-20 flex flex-col items-center animate-bounce">
+            <div className="mt-20 flex flex-col items-center animate-bounce" onClick={() => scrollToSection("features")}>
               <span className="text-sm text-muted-foreground font-medium">Learn more</span>
               <ChevronDown className="w-6 h-6 text-primary" />
             </div>
@@ -301,7 +321,7 @@ const LaunchingSoon = () => {
                     </h3>
                   </div>
                   <p className="text-muted-foreground pl-13">
-                    Select a fragment from any chart — or draw the pattern you're looking for.
+                    Select a fragment from any chart - or draw the pattern you're looking for.
                   </p>
                 </div>
               </div>
@@ -445,7 +465,7 @@ const LaunchingSoon = () => {
                     </h3>
                     <p className="text-muted-foreground text-lg">
                       A popular trading account posts a chart and asks followers to vote. 
-                      Thousands respond — opinions split, heated debates follow. 
+                      Thousands respond - opinions split, heated debates follow. 
                       <span className="text-foreground font-medium"> No one has evidence.</span>
                     </p>
                     
@@ -484,7 +504,7 @@ const LaunchingSoon = () => {
                   </div>
 
                   {/* Right side */}
-                  <div className="space-y-10">
+                  <div className="space-y-6">
                   <div className="flex items-center gap-3 text-muted-foreground">
                     <Microscope className="w-5 h-5" />
                     <span className="text-sm font-medium">The Research</span>
@@ -492,6 +512,10 @@ const LaunchingSoon = () => {
                   <h3 className="text-2xl md:text-3xl font-semibold text-foreground">
                     "What happened historically when a chart looked like this?"
                   </h3>
+                   <p className="text-muted-foreground text-lg">
+                      You should be able to rely on data instead of opinions.
+                      <span className="text-foreground font-medium"> No one has evidence.</span>
+                    </p>
                   <div className="bg-background border border-border rounded-xl p-2 space-y-4">
                     <img
                       src="/answer_trade.png"
@@ -628,7 +652,7 @@ const LaunchingSoon = () => {
             </h2>
 
             <p className="text-xl text-muted-foreground mb-4 max-w-2xl mx-auto">
-              The Similarity Sandbox lets you experiment with our algorithm — 
+              The Similarity Sandbox lets you experiment with our algorithm - 
               no signup required. Build intuition before we launch.
             </p>
 
@@ -769,12 +793,10 @@ const LaunchingSoon = () => {
         <div className="container mx-auto px-6 mb-40">
           <div className="max-w-2xl mx-auto text-center space-y-8">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
-              Stop guessing.<br />
-              <span className="text-muted-foreground">Start knowing.</span>
+              Become serious about trading.<br />
+              <span className="text-muted-foreground">Trade based on research.</span>
             </h2>
-            <p className="text-xl text-muted-foreground">
-              Join the waitlist and be the first to trade with evidence.
-            </p>
+          
             <Button
               size="lg"
               onClick={() => scrollToSection("waitlist")}
@@ -848,13 +870,22 @@ const LaunchingSoon = () => {
                   <FaInstagram className="w-4 h-4 text-muted-foreground hover:text-[#E4405F]" />
                 </a>
                 <a
-                  href="#"
+                  href="https://www.linkedin.com/company/stratosphere-trading"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-2 rounded-lg bg-card/50 border border-border hover:bg-card transition-colors"
                   aria-label="Linkedin"
                 >
                   <FaLinkedin className="w-4 h-4 text-muted-foreground hover:text-[#0077B5]" />
+                </a>
+                <a
+                  href="https://discord.com/invite/SbcjEaKZ?utm_source=Discord%20Widget&utm_medium=Connect"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-lg bg-card/50 border border-border hover:bg-card transition-colors"
+                  aria-label="Discord"
+                >
+                  <FaDiscord className="w-4 h-4 text-muted-foreground hover:text-[#0077B5]" />
                 </a>
         
               </div>

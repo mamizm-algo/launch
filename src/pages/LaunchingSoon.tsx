@@ -241,9 +241,10 @@ const LaunchingSoon = () => {
                   <Button
                     type="submit"
                     className="w-full bg-primary hover:bg-primary/90 shadow-glow"
+                    disabled={waitlistSubmitted}
                   >
                     <Mail className="w-4 h-4 mr-2" />
-                    Join the Waitlist
+                    {waitlistSubmitted ? "Thank you for joining!" : "Join the Waitlist"}
                   </Button>
                 </form>
               </div>

@@ -126,10 +126,7 @@ const SandboxChart = ({ candles, onRegenerate, label }: SandboxChartProps) => {
           <RefreshCw className="h-4 w-4" />
         </Button>
       </div>
-      <div
-        ref={chartRef}
-        className="w-full h-[300px] md:h-[400px] rounded-lg border border-border overflow-hidden"
-      />
+      <div ref={chartRef} className="w-full h-[300px] md:h-[400px] rounded-lg border border-border overflow-hidden" />
     </div>
   );
 };
@@ -176,43 +173,29 @@ const Sandbox = () => {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <HomeHeader />
-      
+
       <main className="flex-1 container mx-auto px-4 py-8 max-w-7xl flex flex-col overflow-hidden">
         {/* Description */}
         <div className="text-center mb-4">
-          <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
-            Similarity Sandbox
-          </h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-3">Similarity Sandbox</h1>
           <p className="text-muted-foreground max-w-3xl mx-auto">
-            Explore how chart similarity works. Regenerate charts independently and adjust the candle count 
-            to see how the similarity score changes in real-time.
+            Explore how chart similarity works. Regenerate charts independently and adjust the candle count to see how
+            the similarity score changes in real-time.
           </p>
         </div>
 
         {/* Similarity Score */}
         <Card className="mx-auto mb-2 px-12 py-2 max-w-md bg-card border-border">
           <div className="text-center">
-            <span className="text-base text-muted-foreground uppercase tracking-wider">
-              Similarity Score
-            </span>
-            <div className="mt-2 text-5xl font-bold text-primary">
-              {similarity}%
-            </div>
+            <span className="text-base text-muted-foreground uppercase tracking-wider">Similarity Score</span>
+            <div className="mt-2 text-5xl font-bold text-primary">{similarity}%</div>
           </div>
         </Card>
 
         {/* Charts */}
         <div className="flex-1 flex flex-col md:flex-row gap-6">
-          <SandboxChart
-            candles={chartA}
-            onRegenerate={regenerateChartA}
-            label="Chart A"
-          />
-          <SandboxChart
-            candles={chartB}
-            onRegenerate={regenerateChartB}
-            label="Chart B"
-          />
+          <SandboxChart candles={chartA} onRegenerate={regenerateChartA} label="Chart A" />
+          <SandboxChart candles={chartB} onRegenerate={regenerateChartB} label="Chart B" />
         </div>
 
         {/* Candle Count Slider */}
@@ -220,9 +203,7 @@ const Sandbox = () => {
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <span className="text-sm font-medium text-foreground">Candle Count</span>
-              <span className="text-sm text-muted-foreground bg-muted px-2 py-1 rounded">
-                {candleCount}
-              </span>
+              <span className="text-sm text-muted-foreground bg-muted px-2 py-1 rounded">{candleCount}</span>
             </div>
             <Slider
               value={[candleCount]}

@@ -880,7 +880,7 @@ const LaunchingSoon = () => {
                   <FaLinkedin className="w-4 h-4 text-muted-foreground hover:text-[#0077B5]" />
                 </a>
                 <a
-                  href="https://discord.com/invite/GMPXtKJh?utm_source=Discord%20Widget&utm_medium=Connect"
+                  href="https://discord.gg/9uz33wV3dP"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-2 rounded-lg bg-card/50 border border-border hover:bg-card transition-colors"

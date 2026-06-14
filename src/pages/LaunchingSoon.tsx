@@ -766,7 +766,7 @@ const LaunchingSoon = () => {
                 </div>
               </div>
               {/* Links */}
-              <nav className="flex items-center gap-6">
+              <nav className="flex flex-wrap items-center gap-6">
                 <button
                   onClick={() => scrollToSection("features")}
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
@@ -831,10 +831,28 @@ const LaunchingSoon = () => {
               </div>
             </div>
 
-            <div className="mt-8 pt-8 border-t border-border text-center">
+            <div className="mt-8 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-3">
               <p className="text-sm text-muted-foreground">
                 © {new Date().getFullYear()} Stratosphere. All rights reserved.
               </p>
+              <div className="flex items-center gap-4">
+                <a
+                  href="/#/privacy"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Privacy Policy
+                </a>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const klaro = (window as any).klaro;
+                    klaro?.show?.((window as any).klaroConfig, true);
+                  }}
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Cookie Settings
+                </button>
+              </div>
             </div>
           </div>
         </div>

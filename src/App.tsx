@@ -7,6 +7,7 @@ import { createHashRouter, RouterProvider } from "react-router-dom";
 import Sandbox from "./pages/Sandbox";
 import LaunchingSoon from "./pages/LaunchingSoon";
 import NotFound from "./pages/NotFound";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 import RouteTracker from "./hooks/route-tracker";
 
 const queryClient = new QueryClient();
@@ -18,6 +19,7 @@ const App = () => {
       children: [
         { path: "/", element: <LaunchingSoon /> },
         { path: "/sandbox", element: <Sandbox /> },
+        { path: "/privacy", element: <PrivacyPolicy /> },
         {
           /* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */
         },

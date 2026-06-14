@@ -1,13 +1,31 @@
 <!doctype html>
 <html lang="en">
   <head>
-		<!-- Google tag (gtag.js) -->
-		<script async src="https://www.googletagmanager.com/gtag/js?id=G-79NLZMQR16"></script>
+		<!-- Google Consent Mode v2 — deny everything by default until Klaro records consent -->
 		<script>
 			window.dataLayer = window.dataLayer || [];
 			function gtag(){dataLayer.push(arguments);}
+			gtag('consent', 'default', {
+				analytics_storage: 'denied',
+				ad_storage: 'denied',
+				ad_user_data: 'denied',
+				ad_personalization: 'denied',
+				wait_for_update: 500
+			});
 			gtag('js', new Date());
+		</script>
 
+		<!-- Google tag (gtag.js) — blocked by Klaro until consent is granted -->
+		<script
+			type="text/plain"
+			data-type="application/javascript"
+			data-name="google-analytics"
+			async
+			src="https://www.googletagmanager.com/gtag/js?id=G-79NLZMQR16"></script>
+		<script
+			type="text/plain"
+			data-type="application/javascript"
+			data-name="google-analytics">
 			gtag('config', 'G-79NLZMQR16');
 		</script>
 

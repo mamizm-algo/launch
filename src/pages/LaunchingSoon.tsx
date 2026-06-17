@@ -3,12 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import {
   TrendingUp,
   Search,
@@ -21,9 +16,8 @@ import {
   Sparkles,
   MessageCircle,
   Users,
-  LineChart,
   ArrowRight,
-  Microscope
+  Microscope,
 } from "lucide-react";
 import { FaDiscord, FaInstagram, FaLinkedin } from "react-icons/fa";
 
@@ -37,7 +31,9 @@ const LaunchingSoon = () => {
   const [acceptEmails, setAcceptEmails] = useState(false);
   const [waitlistSubmitted, setWaitlistSubmitted] = useState(false);
 
-  
+  const trackEvent = (eventName: string, location: string) => {
+    (window as any).gtag?.("event", eventName, { location: location });
+  };
 
   const handleWaitlistSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,14 +46,14 @@ const LaunchingSoon = () => {
       return;
     }
 
-    const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSc0ms4dmsszIi7-nRnWUWzaSkDOdtA0XCLc8Bex8dz7RWHGLg/formResponse";
+    const formUrl =
+      "https://docs.google.com/forms/d/e/1FAIpQLSc0ms4dmsszIi7-nRnWUWzaSkDOdtA0XCLc8Bex8dz7RWHGLg/formResponse";
     const data = new FormData();
 
     if (becomeTester) {
       // tester entry id
       data.append("entry.1676179579", email);
       toast.success("Thanks for becoming a tester! We'll be in touch soon.");
-
     } else {
       // waitlist entry id
       data.append("entry.2125015247", email);
@@ -69,11 +65,12 @@ const LaunchingSoon = () => {
       mode: "no-cors", // important
       body: data,
     });
-    
+
     setEmail("");
     setAcceptEmails(false);
     setBecomeTester(false);
     setWaitlistSubmitted(true);
+    trackEvent("join_waitlist_success", "hero_form");
   };
 
   const scrollToSection = (id: string) => {
@@ -86,8 +83,8 @@ const LaunchingSoon = () => {
     console.log("Found elements:", elements.length);
 
     const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
+      (entries) => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.remove("opacity-0", "translate-y-10");
             entry.target.classList.add("opacity-100", "translate-y-0");
@@ -98,7 +95,7 @@ const LaunchingSoon = () => {
       { threshold: 0.2 }
     );
 
-    elements.forEach(el => observer.observe(el));
+    elements.forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();
   }, []);
@@ -110,11 +107,7 @@ const LaunchingSoon = () => {
         <div className="container mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="rounded-lg" onClick={() => scrollToSection("waitlist")}>
-              <img
-                src="/name_logo.png"
-                alt="Stratosphere logo"
-                className="h-8 object-contain"
-              />
+              <img src="/name_logo.png" alt="Stratosphere logo" className="h-8 object-contain" />
             </div>
           </div>
 
@@ -125,7 +118,7 @@ const LaunchingSoon = () => {
             >
               Features
             </button>
-             <button
+            <button
               onClick={() => scrollToSection("case")}
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
@@ -144,7 +137,10 @@ const LaunchingSoon = () => {
               FAQ
             </button>
             <Button
-              onClick={() => scrollToSection("waitlist")}
+              onClick={() => {
+                trackEvent("join_waitlist_click", "nav");
+                scrollToSection("waitlist");
+              }}
               size="sm"
               className="bg-primary hover:bg-primary/90"
             >
@@ -155,10 +151,7 @@ const LaunchingSoon = () => {
       </header>
 
       {/* Hero Section */}
-      <section
-        id="waitlist"
-        className="relative flex items-center justify-center overflow-hidden py-16 scroll-mt-24"
-      >
+      <section id="waitlist" className="relative flex items-center justify-center overflow-hidden py-16 scroll-mt-24">
         {/* Animated background elements */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse" />
@@ -167,14 +160,10 @@ const LaunchingSoon = () => {
 
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-4xl mx-auto text-center space-y-8">
-           
-
             {/* Main headline */}
             <h1 className="text-3xl md:text-4xl lg:text-7xl font-bold text-foreground leading-tight">
               Go-to research tool for{" "}
-              <span className="bg-gradient-primary bg-clip-text text-primary">
-                retail day traders
-              </span>
+              <span className="bg-gradient-primary bg-clip-text text-primary">retail day traders</span>
             </h1>
             {/* <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight">
               Research, backtest and validate trades using{" "}
@@ -185,17 +174,14 @@ const LaunchingSoon = () => {
 
             {/* Subheadline */}
             <p className="text-lg md:text-xl text-muted-foreground max-w-4xl mx-auto">
-              STRATOSPHERE helps traders discover repeatable historical patterns,
-              eliminate subjective bias, and validate trading strategies with
-              data-driven insights - before risking real capital.
+              STRATOSPHERE helps traders discover repeatable historical patterns, eliminate subjective bias, and
+              validate trading strategies with data-driven insights - before risking real capital.
             </p>
 
             {/* Waitlist Form */}
-           <div className="mx-auto pt-4">
+            <div className="mx-auto pt-4">
               <div className="bg-card backdrop-blur-sm border border-primary hover:shadow-glow rounded-xl p-6 space-y-4">
-                <h3 className="text-lg font-semibold text-foreground">
-                  Sign up to the Waitlist
-                </h3>
+                <h3 className="text-lg font-semibold text-foreground">Sign up to the Waitlist</h3>
                 <form onSubmit={handleWaitlistSubmit} className="space-y-4">
                   <Input
                     type="email"
@@ -209,34 +195,25 @@ const LaunchingSoon = () => {
                       <Checkbox
                         id="tester"
                         checked={becomeTester}
-                        onCheckedChange={(checked) =>
-                          setBecomeTester(checked === true)
-                        }
+                        onCheckedChange={(checked) => setBecomeTester(checked === true)}
                       />
-                      <Label
-                        htmlFor="tester"
-                        className="text-foreground cursor-pointer"
-                      >
-                        Become a Tester - you will become an invaluable part of shaping STRATOSPHERE's most important features
-                        and delivering feedback to how they solve your problems.
+                      <Label htmlFor="tester" className="text-foreground cursor-pointer">
+                        Become a Tester - you will become an invaluable part of shaping STRATOSPHERE's most important
+                        features and delivering feedback to how they solve your problems.
                       </Label>
                     </div>
                     <div className="flex items-start gap-3">
                       <Checkbox
                         id="emails"
                         checked={acceptEmails}
-                        onCheckedChange={(checked) =>
-                          setAcceptEmails(checked === true)
-                        }
+                        onCheckedChange={(checked) => setAcceptEmails(checked === true)}
                       />
-                      <Label
-                        htmlFor="emails"
-                        className="text-xs text-muted-foreground cursor-pointer"
-                      >
-                      I agree to receive access updates and marketing emails from STRATOSPHERE. By joining the waitlist, you also agree to our Privacy Policy.
+                      <Label htmlFor="emails" className="text-xs text-muted-foreground cursor-pointer">
+                        I agree to receive access updates and marketing emails from STRATOSPHERE. By joining the
+                        waitlist, you also agree to our Privacy Policy.
                       </Label>
                     </div>
-                    </div>
+                  </div>
 
                   <Button
                     type="submit"
@@ -250,27 +227,33 @@ const LaunchingSoon = () => {
               </div>
             </div>
 
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-              And
-            </p>
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">And</p>
 
             <div className="mx-auto pt-4">
               <div className="bg-card backdrop-blur-sm border border-primary hover:shadow-glow rounded-xl p-6 space-y-4">
-                <h3 className="text-lg font-semibold text-foreground">
-                  Join our Discord community
-                </h3>
+                <h3 className="text-lg font-semibold text-foreground">Join our Discord community</h3>
                 <h2 className="text-foreground">
-                  Connect with the founders and other traders to exchange ideas and be up to date with the newest features.
+                  Connect with the founders and other traders to exchange ideas and be up to date with the newest
+                  features.
                 </h2>
                 <div className="flex mx-auto justify-center">
-                  <iframe src="https://discordapp.com/widget?id=1495468749745033257&theme=dark" width="900" height="350" allowtransparency="true" frameborder="1" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+                  <iframe
+                    src="https://discordapp.com/widget?id=1495468749745033257&theme=dark"
+                    width="900"
+                    height="350"
+                    allowtransparency="true"
+                    frameborder="1"
+                    sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
+                  ></iframe>
                 </div>
               </div>
             </div>
 
-
             {/* Scroll indicator */}
-            <div className="mt-20 flex flex-col items-center animate-bounce" onClick={() => scrollToSection("features")}>
+            <div
+              className="mt-20 flex flex-col items-center animate-bounce"
+              onClick={() => scrollToSection("features")}
+            >
               <span className="text-sm text-muted-foreground font-medium">Learn more</span>
               <ChevronDown className="w-6 h-6 text-primary" />
             </div>
@@ -285,7 +268,8 @@ const LaunchingSoon = () => {
             {/* Solution headline */}
             <div className="text-center space-y-6 mb-20">
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground">
-                Objective, repeatable,<br />
+                Objective, repeatable,
+                <br />
                 <span className="bg-gradient-primary bg-clip-text text-primary">reliable</span>
               </h2>
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -298,15 +282,16 @@ const LaunchingSoon = () => {
               {/* Step 1 */}
               <div className="space-y-6">
                 <div
-                //  className="aspect-video border border-primary rounded-xl hover:shadow-glow flex items-center justify-center overflow-hidden">
-                 className="
+                  //  className="aspect-video border border-primary rounded-xl hover:shadow-glow flex items-center justify-center overflow-hidden">
+                  className="
                   aspect-video border border-primary rounded-xl hover:shadow-glow
                   flex items-center justify-center overflow-hidden
                   transition-all duration-700 delay-600 ease-out
                   opacity-0 translate-y-10
                   animate-on-scroll
-                ">  
-                <img
+                "
+                >
+                  <img
                     src="/features_browse.png"
                     alt="Pattern selection preview"
                     className="w-full h-full object-cover rounded-xl"
@@ -317,9 +302,7 @@ const LaunchingSoon = () => {
                     <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center shrink-0">
                       <span className="text-lg font-bold text-primary-foreground">1</span>
                     </div>
-                    <h3 className="text-xl font-semibold text-foreground">
-                      Define Your Pattern
-                    </h3>
+                    <h3 className="text-xl font-semibold text-foreground">Define Your Pattern</h3>
                   </div>
                   <p className="text-muted-foreground pl-13">
                     Select a fragment from any chart - or draw the pattern you're looking for.
@@ -329,16 +312,17 @@ const LaunchingSoon = () => {
 
               {/* Step 2 */}
               <div className="space-y-6">
-                <div 
-                // className="aspect-video  border border-primary rounded-xl hover:shadow-glow bg-card flex items-center justify-center overflow-hidden">
-                    className="
+                <div
+                  // className="aspect-video  border border-primary rounded-xl hover:shadow-glow bg-card flex items-center justify-center overflow-hidden">
+                  className="
                   aspect-video border border-primary rounded-xl hover:shadow-glow
                   flex items-center justify-center overflow-hidden
                   transition-all duration-700 delay-600 ease-out
                   opacity-0 translate-y-10
                   animate-on-scroll
-                ">  
-                   <img
+                "
+                >
+                  <img
                     src="/features_collection.png"
                     alt="Result collection preview"
                     className="w-full h-full object-cover rounded-xl"
@@ -349,9 +333,7 @@ const LaunchingSoon = () => {
                     <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center shrink-0">
                       <span className="text-lg font-bold text-primary-foreground">2</span>
                     </div>
-                    <h3 className="text-xl font-semibold text-foreground">
-                      Search History
-                    </h3>
+                    <h3 className="text-xl font-semibold text-foreground">Search History</h3>
                   </div>
                   <p className="text-muted-foreground pl-13">
                     Our algorithm scans thousands of historical charts to find similar patterns.
@@ -361,29 +343,24 @@ const LaunchingSoon = () => {
 
               {/* Step 3 */}
               <div className="space-y-6">
-                <div 
-                // className="aspect-video bg-card border border-primary rounded-xl hover:shadow-glow flex items-center justify-center overflow-hidden">
-                 className="
+                <div
+                  // className="aspect-video bg-card border border-primary rounded-xl hover:shadow-glow flex items-center justify-center overflow-hidden">
+                  className="
                   aspect-video border border-primary rounded-xl hover:shadow-glow
                   flex items-center justify-center overflow-hidden
                   transition-all duration-700 delay-600 ease-out
                   opacity-0 translate-y-10
                   animate-on-scroll
-                ">     
-                <img
-                    src="/features_outcomes.png"
-                    alt="Outcomes preview"
-                    className="h-full object-cover "
-                  />
+                "
+                >
+                  <img src="/features_outcomes.png" alt="Outcomes preview" className="h-full object-cover " />
                 </div>
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center shrink-0">
                       <span className="text-lg font-bold text-primary-foreground">3</span>
                     </div>
-                    <h3 className="text-xl font-semibold text-foreground">
-                      Analyze Outcomes
-                    </h3>
+                    <h3 className="text-xl font-semibold text-foreground">Analyze Outcomes</h3>
                   </div>
                   <p className="text-muted-foreground pl-13">
                     See what happened after each match. Get statistics. Make informed decisions.
@@ -397,9 +374,7 @@ const LaunchingSoon = () => {
               <div className="flex items-start gap-4 p-6 bg-card rounded-xl border border-border/50">
                 <CheckCircle2 className="w-6 h-6 text-primary shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="font-semibold text-foreground mb-1">
-                    Objective
-                  </h4>
+                  <h4 className="font-semibold text-foreground mb-1">Objective</h4>
                   <p className="text-sm text-muted-foreground">
                     Remove emotions and bias from your strategy research with Pattern Similarity Score.
                   </p>
@@ -408,9 +383,7 @@ const LaunchingSoon = () => {
               <div className="flex items-start gap-4 p-6 bg-card rounded-xl border border-border/50">
                 <CheckCircle2 className="w-6 h-6 text-primary shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="font-semibold text-foreground mb-1">
-                    Repeatable
-                  </h4>
+                  <h4 className="font-semibold text-foreground mb-1">Repeatable</h4>
                   <p className="text-sm text-muted-foreground">
                     Same input, same results. Find all charts matching your strategy in the matter of seconds.
                   </p>
@@ -419,11 +392,10 @@ const LaunchingSoon = () => {
               <div className="flex items-start gap-4 p-6 bg-card rounded-xl border border-border/50">
                 <CheckCircle2 className="w-6 h-6 text-primary shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="font-semibold text-foreground mb-1">
-                    Reliable
-                  </h4>
+                  <h4 className="font-semibold text-foreground mb-1">Reliable</h4>
                   <p className="text-sm text-muted-foreground">
-                    You are in control of the strategy, entry and exit conditions - we give you the data to make the best decision.
+                    You are in control of the strategy, entry and exit conditions - we give you the data to make the
+                    best decision.
                   </p>
                 </div>
               </div>
@@ -442,9 +414,7 @@ const LaunchingSoon = () => {
                 <MessageCircle className="w-4 h-4 text-primary" />
                 <span className="text-sm font-medium text-foreground">Real Example</span>
               </div>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
-                From opinions to evidence
-              </h2>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">From opinions to evidence</h2>
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
                 See how Stratosphere transforms a social media debate into data-driven insight.
               </p>
@@ -461,15 +431,13 @@ const LaunchingSoon = () => {
                       <Users className="w-5 h-5" />
                       <span className="text-sm font-medium">The Scenario</span>
                     </div>
-                    <h3 className="text-2xl md:text-3xl font-semibold text-foreground">
-                      "Will price go up or down?"
-                    </h3>
+                    <h3 className="text-2xl md:text-3xl font-semibold text-foreground">"Will price go up or down?"</h3>
                     <p className="text-muted-foreground text-lg">
-                      A popular trading account posts a chart and asks followers to vote. 
-                      Thousands respond - opinions split, heated debates follow. 
+                      A popular trading account posts a chart and asks followers to vote. Thousands respond - opinions
+                      split, heated debates follow.
                       <span className="text-foreground font-medium"> No one has evidence.</span>
                     </p>
-                    
+
                     {/* Mock Instagram poll */}
                     <div className="bg-background border border-border rounded-xl p-6 space-y-4">
                       <div className="flex items-center gap-3">
@@ -482,10 +450,10 @@ const LaunchingSoon = () => {
                         </div>
                       </div>
                       <img
-                    src="/guess_trade.png"
-                    alt="Pattern selection preview"
-                    className="w-full h-full object-cover rounded-xl"
-                  />
+                        src="/guess_trade.png"
+                        alt="Pattern selection preview"
+                        className="w-full h-full object-cover rounded-xl"
+                      />
                       <div className="space-y-2">
                         <div className="flex items-center gap-3">
                           <div className="flex-1 h-10 bg-bullish/20 rounded-lg flex items-center px-4">
@@ -506,58 +474,50 @@ const LaunchingSoon = () => {
 
                   {/* Right side */}
                   <div className="space-y-6">
-                  <div className="flex items-center gap-3 text-muted-foreground">
-                    <Microscope className="w-5 h-5" />
-                    <span className="text-sm font-medium">The Research</span>
-                  </div>
-                  <h3 className="text-2xl md:text-3xl font-semibold text-foreground">
-                    "What happened historically when a chart looked like this?"
-                  </h3>
-                   <p className="text-muted-foreground text-lg">
+                    <div className="flex items-center gap-3 text-muted-foreground">
+                      <Microscope className="w-5 h-5" />
+                      <span className="text-sm font-medium">The Research</span>
+                    </div>
+                    <h3 className="text-2xl md:text-3xl font-semibold text-foreground">
+                      "What happened historically when a chart looked like this?"
+                    </h3>
+                    <p className="text-muted-foreground text-lg">
                       You should be able to rely on data instead of opinions.
                       <span className="text-foreground font-medium"> No one has evidence.</span>
                     </p>
-                  <div className="bg-background border border-border rounded-xl p-2 space-y-4">
-                    <img
-                      src="/answer_trade.png"
-                      alt="Trade research"
-                      className="w-full h-full object-cover my-1 rounded-xl zoom-hover transition-transform"
-                    />
-                    <div className="space-y-2 mx-3 py-1">
-                      {/* Up */}
-                      <div className="flex items-center gap-3">
-                        <div
-                          className="h-10 bg-bullish/20 rounded-lg flex items-center px-2 min-w-[20px]"
-                          // style={{ width: `62.3%` }}
-                          style={{ width: `100%` }}
-                        >
-                          <span className="text-sm text-foreground whitespace-nowrap">
-                            🚀 Up
-                          </span>
+                    <div className="bg-background border border-border rounded-xl p-2 space-y-4">
+                      <img
+                        src="/answer_trade.png"
+                        alt="Trade research"
+                        className="w-full h-full object-cover my-1 rounded-xl zoom-hover transition-transform"
+                      />
+                      <div className="space-y-2 mx-3 py-1">
+                        {/* Up */}
+                        <div className="flex items-center gap-3">
+                          <div
+                            className="h-10 bg-bullish/20 rounded-lg flex items-center px-2 min-w-[20px]"
+                            // style={{ width: `62.3%` }}
+                            style={{ width: `100%` }}
+                          >
+                            <span className="text-sm text-foreground whitespace-nowrap">🚀 Up</span>
+                          </div>
+                          <span className="text-sm text-muted-foreground">62.3%</span>
                         </div>
-                        <span className="text-sm text-muted-foreground">
-                          62.3%
-                        </span>
-                      </div>
 
-                      {/* Down */}
-                      <div className="flex items-center gap-3">
-                        <div
-                          className="h-10 bg-bearish/20 rounded-lg flex items-center px-2 min-w-[20px]"
-                          // style={{ width: `37.7%` }}
-                          style={{ width: `60%` }}
-                        >
-                          <span className="text-sm text-foreground whitespace-nowrap">
-                            📉 Down
-                          </span>
+                        {/* Down */}
+                        <div className="flex items-center gap-3">
+                          <div
+                            className="h-10 bg-bearish/20 rounded-lg flex items-center px-2 min-w-[20px]"
+                            // style={{ width: `37.7%` }}
+                            style={{ width: `60%` }}
+                          >
+                            <span className="text-sm text-foreground whitespace-nowrap">📉 Down</span>
+                          </div>
+                          <span className="text-sm text-muted-foreground">37.7%</span>
                         </div>
-                        <span className="text-sm text-muted-foreground">
-                          37.7%
-                        </span>
                       </div>
                     </div>
                   </div>
-                </div>
                 </div>
               </div>
 
@@ -623,10 +583,9 @@ const LaunchingSoon = () => {
               {/* The result */}
               <div className="text-center space-y-6 pt-8">
                 <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto">
-                  Instead of asking the crowd, you ask history.<br />
-                  <span className="text-foreground font-medium">
-                    And history has receipts.
-                  </span>
+                  Instead of asking the crowd, you ask history.
+                  <br />
+                  <span className="text-foreground font-medium">And history has receipts.</span>
                 </p>
               </div>
             </div>
@@ -635,40 +594,32 @@ const LaunchingSoon = () => {
       </section>
 
       {/* Sandbox Section */}
-      <section
-        id="sandbox"
-        className="py-24"
-      >
+      <section id="sandbox" className="py-24">
         <div className="container mx-auto px-6">
           <div className="max-w-3xl mx-auto m text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/30 mb-4">
               <FlaskConical className="w-4 h-4 text-primary" />
-              <span className="text-sm font-medium text-foreground">
-                Try It Now
-              </span>
+              <span className="text-sm font-medium text-foreground">Try It Now</span>
             </div>
 
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-              See it for yourself
-            </h2>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">See it for yourself</h2>
 
             <p className="text-xl text-muted-foreground mb-4 max-w-2xl mx-auto">
-              The Similarity Sandbox lets you experiment with our algorithm - 
-              no signup required. Build intuition before we launch.
+              The Similarity Sandbox lets you experiment with our algorithm - no signup required. Build intuition before
+              we launch.
             </p>
 
             <div className="bg-card border border-primary rounded-xl hover:shadow-glow rounded-2xl p-4 md:p-4">
               <div className="aspect-video bg-background rounded-xl flex items-center justify-center pb-2 pt-1 mb-4 border border-border/50">
-                <img
-                    src="/sandbox_demo_short.gif"
-                    alt="Sandbox preview"
-                    className=" h-full object-cover rounded-xl"
-                  />
+                <img src="/sandbox_demo_short.gif" alt="Sandbox preview" className=" h-full object-cover rounded-xl" />
               </div>
 
               <Button
                 size="sm"
-                onClick={() => navigate("/sandbox")}
+                onClick={() => {
+                  trackEvent("try_sandbox_click", "sandbox_banner");
+                  navigate("/sandbox");
+                }}
                 className="bg-primary hover:bg-primary/90 shadow-glow
                   text-sm sm:text-base lg:text-xl
                   px-4 sm:px-6 lg:px-8
@@ -676,13 +627,9 @@ const LaunchingSoon = () => {
                   h-auto
                   
                   whitespace-nowrap"
-                >
-                <span className="hidden sm:inline">
-                  Try the Similarity Sandbox
-                </span>
-                <span className="sm:hidden">
-                  Try Sandbox
-                </span>
+              >
+                <span className="hidden sm:inline">Try the Similarity Sandbox</span>
+                <span className="sm:hidden">Try Sandbox</span>
                 <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
               </Button>
             </div>
@@ -698,23 +645,20 @@ const LaunchingSoon = () => {
       <section id="faq" className="py-28 md:py-40 bg-gradient-hero">
         <div className="container mx-auto px-6 mb-60">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground text-center mb-6">
-              Questions?
-            </h2>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground text-center mb-6">Questions?</h2>
             <p className="text-lg text-muted-foreground text-center mb-16">
               Here are some answers. More coming soon. <br />
-              In the meantime, reach out to us on {" "}
+              In the meantime, reach out to us on{" "}
               <a
                 href="https://www.instagram.com/stratospheretrading/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-accent"
               >
-               Instagram
+                Instagram
               </a>
               .
             </p>
-            
 
             <Accordion type="single" collapsible className="space-y-4">
               <AccordionItem
@@ -725,10 +669,8 @@ const LaunchingSoon = () => {
                   What markets does Stratosphere support?
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground pb-6">
-                  Stratosphere is designed to work with multiple asset classes
-                  including cryptocurrencies, forex pairs, and stocks. We're
-                  continuously adding more assets and markets based on user
-                  demand.
+                  Stratosphere is designed to work with multiple asset classes including cryptocurrencies, forex pairs,
+                  and stocks. We're continuously adding more assets and markets based on user demand.
                 </AccordionContent>
               </AccordionItem>
 
@@ -740,9 +682,8 @@ const LaunchingSoon = () => {
                   Is this for beginners or advanced traders?
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground pb-6">
-                  Both. Beginners will appreciate the visual, intuitive approach 
-                  to pattern analysis. Advanced traders will value the objective, 
-                  data-driven validation of their strategies.
+                  Both. Beginners will appreciate the visual, intuitive approach to pattern analysis. Advanced traders
+                  will value the objective, data-driven validation of their strategies.
                 </AccordionContent>
               </AccordionItem>
 
@@ -754,8 +695,8 @@ const LaunchingSoon = () => {
                   When will the full product launch?
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground pb-6">
-                  We're currently in development with a target launch in 2026.
-                  Join the waitlist to get notified and receive priority access.
+                  We're currently in development with a target launch in 2026. Join the waitlist to get notified and
+                  receive priority access.
                 </AccordionContent>
               </AccordionItem>
 
@@ -767,9 +708,9 @@ const LaunchingSoon = () => {
                   How is this different from regular backtesting?
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground pb-6">
-                  Traditional backtesting requires rigid, rule-based strategies. 
-                  Stratosphere uses visual pattern matching and similarity scoring, 
-                  letting you test ideas based on how charts look — not just indicator values.
+                  Traditional backtesting requires rigid, rule-based strategies. Stratosphere uses visual pattern
+                  matching and similarity scoring, letting you test ideas based on how charts look — not just indicator
+                  values.
                 </AccordionContent>
               </AccordionItem>
 
@@ -781,26 +722,29 @@ const LaunchingSoon = () => {
                   Is there a free tier?
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground pb-6">
-                  Pricing details will be announced closer to launch. We plan to
-                  offer options for different types of traders. The Similarity
-                  Sandbox is currently free to use.
+                  Pricing details will be announced closer to launch. We plan to offer options for different types of
+                  traders. The Similarity Sandbox is currently free to use.
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
           </div>
         </div>
 
-      {/* Final CTA */}
+        {/* Final CTA */}
         <div className="container mx-auto px-6 mb-40">
           <div className="max-w-2xl mx-auto text-center space-y-8">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground">
-              Become serious about trading.<br />
+              Become serious about trading.
+              <br />
               <span className="text-muted-foreground">Trade based on research.</span>
             </h2>
-          
+
             <Button
               size="lg"
-              onClick={() => scrollToSection("waitlist")}
+              onClick={() => {
+                trackEvent("join_waitlist_click", "cta");
+                scrollToSection("waitlist");
+              }}
               className="bg-primary hover:bg-primary/90 shadow-glow text-lg px-8 py-3 h-auto"
             >
               <Mail className="w-5 h-5 mr-2" />
@@ -818,15 +762,11 @@ const LaunchingSoon = () => {
               {/* Logo */}
               <div className="flex items-center gap-2">
                 <div className="p-2 rounded-lg">
-                  <img
-                    src="/name_logo.png"
-                    alt="Stratosphere logo"
-                    className="h-8 object-contain"
-                  />
+                  <img src="/name_logo.png" alt="Stratosphere logo" className="h-8 object-contain" />
                 </div>
               </div>
               {/* Links */}
-              <nav className="flex items-center gap-6">
+              <nav className="flex flex-wrap items-center gap-6">
                 <button
                   onClick={() => scrollToSection("features")}
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors"
@@ -861,7 +801,7 @@ const LaunchingSoon = () => {
 
               {/* Social Icons */}
               <div className="flex items-center gap-4">
-               <a
+                <a
                   href="https://www.instagram.com/stratospheretrading/"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -888,14 +828,31 @@ const LaunchingSoon = () => {
                 >
                   <FaDiscord className="w-4 h-4 text-muted-foreground hover:text-[#0077B5]" />
                 </a>
-        
               </div>
             </div>
 
-            <div className="mt-8 pt-8 border-t border-border text-center">
+            <div className="mt-8 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-3">
               <p className="text-sm text-muted-foreground">
                 © {new Date().getFullYear()} Stratosphere. All rights reserved.
               </p>
+              <div className="flex items-center gap-4">
+                <a
+                  href="/#/privacy"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Privacy Policy
+                </a>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const klaro = (window as any).klaro;
+                    klaro?.show?.((window as any).klaroConfig, true);
+                  }}
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Cookie Settings
+                </button>
+              </div>
             </div>
           </div>
         </div>
